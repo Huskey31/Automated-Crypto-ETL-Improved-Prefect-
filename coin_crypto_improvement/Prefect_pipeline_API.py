@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 from sqlalchemy import create_engine
 from prefect import flow, task
@@ -29,11 +29,14 @@ def extract():
     data = response.json()
 
     table_data = []
+    extracted_at = datetime.now(timezone.utc)
+
     for coin in data:
         table_data.append({
             "Coin": coin["name"],
             "Price": coin["current_price"],
-            "Market Cap": coin["market_cap"]
+            "Market Cap": coin["market_cap"],
+            "extracted_at": extracted_at
         })
     logging.info("Data extraction completed successfully")
     return table_data
@@ -44,6 +47,7 @@ def transform(table_data):
     df = pd.DataFrame(table_data)
     df["Price"] = pd.to_numeric(df["Price"])
     df["Market Cap"] = pd.to_numeric(df["Market Cap"])
+    df["extracted_at"] = pd.to_datetime(df["extracted_at"])
     df = df.drop_duplicates()
     logging.info("Data transformation completed successfully")
     return df
