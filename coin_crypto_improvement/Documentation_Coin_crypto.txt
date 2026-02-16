@@ -1,0 +1,16 @@
+I'm going to collect 10 days worth of data from coin gecko crypto and it will be four coins Bitcoin, Ethereum, XRP and Cardano  , It will extract every 30 minutes and prediction is it will collect over 2000 rows of data, 
+Once extraction is done, I will create a program that will test data for accuracy, it will check average extraction time which shouldn't be more that 35 minutes apart or less that 30 minutes.
+
+Pipeline notes:
+
+1. Had to restart extraction from start, I forgot date stamps, analysis won't work without dates. Total rows that had to get discarded was  over 380 just over a day. I started extracting at 2:30am 1/26/26. 
+
+2. Prefect crashed at 12:25 PM 1/28/26. I restarted server, started coin deployment and had to reschedule pipeline for 12:31 execution and pipeline is proceeding as usual now. 
+
+3. Failed scheduled pipeline on 1/29/26 at 05:59 pm, Reason: Data couldn't load due to loss of internet connection and there was four retries, Action: fixed network connection. Pipeline up and running 
+
+4.  Failed scheduled pipeline on 2/2/26 at 08:15 pm, Reason: Data couldn't extract due to loss of internet connection and there was seven  retries, Action: fixed network connection. Pipeline up and running.( seven retries is unusual I've set it to 4 retries, and if a second flow run executed it should equal to eight) NB!! NEEDS TO BE INVESTIGATED!!
+
+5.Pipeleine Completed on 06 Feb 2026 and it passed it's accuracy test at 32 minutes average, there's no missing values, and no duplicates.
+
+6. Used power bi to do some analytics checking stability of coins. 
